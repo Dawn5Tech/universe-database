@@ -155,6 +155,43 @@ ALTER SEQUENCE public.planet_planet_id_seq OWNED BY public.planet.planet_id;
 
 
 --
+-- Name: satellite; Type: TABLE; Schema: public; Owner: freecodecamp
+--
+
+CREATE TABLE public.satellite (
+    satellite_id integer NOT NULL,
+    name character varying(100) NOT NULL,
+    purpose text,
+    orbit_radius integer NOT NULL,
+    is_operational boolean NOT NULL
+);
+
+
+ALTER TABLE public.satellite OWNER TO freecodecamp;
+
+--
+-- Name: satellite_satellite_id_seq; Type: SEQUENCE; Schema: public; Owner: freecodecamp
+--
+
+CREATE SEQUENCE public.satellite_satellite_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.satellite_satellite_id_seq OWNER TO freecodecamp;
+
+--
+-- Name: satellite_satellite_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
+--
+
+ALTER SEQUENCE public.satellite_satellite_id_seq OWNED BY public.satellite.satellite_id;
+
+
+--
 -- Name: star; Type: TABLE; Schema: public; Owner: freecodecamp
 --
 
@@ -210,6 +247,13 @@ ALTER TABLE ONLY public.moon ALTER COLUMN moon_id SET DEFAULT nextval('public.mo
 --
 
 ALTER TABLE ONLY public.planet ALTER COLUMN planet_id SET DEFAULT nextval('public.planet_planet_id_seq'::regclass);
+
+
+--
+-- Name: satellite satellite_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.satellite ALTER COLUMN satellite_id SET DEFAULT nextval('public.satellite_satellite_id_seq'::regclass);
 
 
 --
@@ -276,6 +320,17 @@ INSERT INTO public.planet VALUES (12, 'TOI-700d', 6, 9000, false);
 
 
 --
+-- Data for Name: satellite; Type: TABLE DATA; Schema: public; Owner: freecodecamp
+--
+
+INSERT INTO public.satellite VALUES (1, 'Hubble', 'Research', 547, true);
+INSERT INTO public.satellite VALUES (2, 'James Webb', 'Research', 1500000, true);
+INSERT INTO public.satellite VALUES (3, 'GPS IIF-10', 'Navigation', 20200, true);
+INSERT INTO public.satellite VALUES (4, 'Galileo', 'Navigation', 23222, true);
+INSERT INTO public.satellite VALUES (5, 'ISS', 'Research', 408, true);
+
+
+--
 -- Data for Name: star; Type: TABLE DATA; Schema: public; Owner: freecodecamp
 --
 
@@ -306,6 +361,13 @@ SELECT pg_catalog.setval('public.moon_moon_id_seq', 20, true);
 --
 
 SELECT pg_catalog.setval('public.planet_planet_id_seq', 12, true);
+
+
+--
+-- Name: satellite_satellite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: freecodecamp
+--
+
+SELECT pg_catalog.setval('public.satellite_satellite_id_seq', 5, true);
 
 
 --
@@ -361,6 +423,22 @@ ALTER TABLE ONLY public.planet
 
 ALTER TABLE ONLY public.planet
     ADD CONSTRAINT planet_pkey PRIMARY KEY (planet_id);
+
+
+--
+-- Name: satellite satellite_name_key; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.satellite
+    ADD CONSTRAINT satellite_name_key UNIQUE (name);
+
+
+--
+-- Name: satellite satellite_pkey; Type: CONSTRAINT; Schema: public; Owner: freecodecamp
+--
+
+ALTER TABLE ONLY public.satellite
+    ADD CONSTRAINT satellite_pkey PRIMARY KEY (satellite_id);
 
 
 --
